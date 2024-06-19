@@ -63,6 +63,9 @@ func GetDocuments(filename string) ([]any, error) {
 	var res []any
 	reader := bufio.NewReader(file)
 
+	// 跳过第一行 字段名
+	reader.ReadString('\n')
+
 	for {
 		content, err := reader.ReadString('\n') // 读取一行
 		if err != nil {
