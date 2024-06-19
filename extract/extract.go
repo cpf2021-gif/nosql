@@ -16,8 +16,8 @@ func extractFields(raw string) (Document, bool) {
 		return res, false
 	}
 
-	res.Id = strs[0]      // id
-	res.Cate = strs[1]    // cate
+	res.Id = strs[0]   // id
+	res.Cate = strs[1] // cate
 	// content中可能使用了逗号 `,`，需要特殊处理
 	// ctime - 1684948299 10位
 	// 从倒数第3个字段开始，找到第一个长度为10，全为数字的字段，即为ctime
@@ -39,7 +39,7 @@ func extractFields(raw string) (Document, bool) {
 
 	// key_word
 	var key_word []string
-	for i := idx + 1; i < length - 2; i++ {
+	for i := idx + 1; i < length-2; i++ {
 		if len(strs[i]) == 0 {
 			continue
 		}

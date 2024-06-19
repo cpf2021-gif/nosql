@@ -1,25 +1,25 @@
 package sql
 
 import (
-    "context"
-    "log"
+	"context"
+	"log"
 
-    "go.mongodb.org/mongo-driver/bson"
-    "go.mongodb.org/mongo-driver/mongo"
-    "go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func Mr() {
-    clientOptions := options.Client().ApplyURI(DefaultMongoURI)
-    client, err := mongo.Connect(context.TODO(), clientOptions)
-    if err != nil {
-        log.Fatal(err)
-    }
-    defer client.Disconnect(context.TODO())
+	clientOptions := options.Client().ApplyURI(DefaultMongoURI)
+	client, err := mongo.Connect(context.TODO(), clientOptions)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer client.Disconnect(context.TODO())
 
-    db := client.Database("test")
+	db := client.Database("test")
 
-    mapFunction := `
+	mapFunction := `
     function() {
         if (this.raw_keywords == null) {
             emit("其他", 1);
@@ -37,14 +37,14 @@ func Mr() {
         emit("其他", 1);
     }`
 
-    reduceFunction := `
+	reduceFunction := `
     function(key, values) {
         return Array.sum(values);
     }`
 
-    scope := bson.M{
-        "provinceMapping": Province,
-    }
+	scope := bson.M{
+		"provinceMapping": Province,
+	}
 
 	res := db.RunCommand(context.Background(), bson.D{
 		{Key: "mapReduce", Value: "news"},
