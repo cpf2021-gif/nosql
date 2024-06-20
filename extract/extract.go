@@ -23,15 +23,18 @@ func extractFields(raw string) (Document, bool) {
 	// 从倒数第3个字段开始，找到第一个长度为10，全为数字的字段，即为ctime
 	// ctime 之后的字段为 keywords
 	// ctime 之前的字段为 content
-
 	idx := length - 3
 	for ; idx >= 3; idx-- {
 		if len(strs[idx]) == 10 {
-			_, err := strconv.ParseInt(strs[idx], 10, 64)
-			if err == nil {
+			if _, err := strconv.Atoi(strs[idx]); err == nil {
 				break
 			}
 		}
+	}
+
+	if idx == 2 {
+		// 没有找到 ctime
+		return res, false
 	}
 
 	res.Content = strings.Join(strs[2:idx], ",") // content
