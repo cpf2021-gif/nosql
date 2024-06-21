@@ -4,7 +4,7 @@ const (
 	// 使用 mongosh 的连接字符串
 	// 使用rs.status()查看集群状态
 	// 将port改为primary的端口[25000, 25001, 25002]
-	DefaultMongoURI = "mongodb://127.0.0.1:25002/?directConnection=true&serverSelectionTimeoutMS=20000"
+	DefaultMongoURI = "mongodb://127.0.0.1:25000/?directConnection=true&serverSelectionTimeoutMS=20000"
 )
 
 var Province = map[string][]string{
